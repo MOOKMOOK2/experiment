@@ -276,7 +276,7 @@ export default function App() {
   const exportData = () => {
     const keys = ['participant','room','mode','elapsed_ms','space_score','s1','s2','s3','s4','s5','q0','q1','q2','q3','q4'];
     const csv = '\uFEFF' + [keys, ...answers.map((row) => keys.map((key) => row[key] ?? ''))].map((row) => row.map((value) => '"' + String(value).replaceAll('"','""') + '"').join(',')).join('\r\n');
-    const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); link.download = 'stayview-' + (participant || 'response') + '.csv'; link.click(); URL.revokeObjectURL(link.href);
+    const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); link.download = 'experiment-' + (participant || 'response') + '.csv'; link.click(); URL.revokeObjectURL(link.href);
   };
   const endExperiment = () => {
     setSelectedRoom('A'); setViewMode('photo'); setPhotoIndex(0); setStep(0); setSurvey(false);
