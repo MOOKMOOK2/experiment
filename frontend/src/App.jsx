@@ -201,28 +201,13 @@ function ThreeRoom({ room }) {
   return <div className="three-room" ref={ref} />;
 }
 
-function PlanOption({ index }) {
-  const layouts = [
-    { bedX: 16, doorX: 88, bathX: 12, windowX: 16, rotate: true },
-    { bedX: 48, doorX: 14, bathX: 82, windowX: 47, rotate: false },
-    { bedX: 15, doorX: 87, bathX: 12, windowX: 15, rotate: false },
-    { bedX: 48, doorX: 87, bathX: 12, windowX: 47, rotate: true },
-  ];
-  const plan = layouts[index];
-  return <svg className="plan-drawing" viewBox="0 0 120 82" aria-hidden="true">
-    <rect x="8" y="7" width="104" height="68" rx="1" fill="#f7f4ed" stroke="#817f73" strokeWidth="2" />
-    <path d={'M' + plan.windowX + ' 8h23'} stroke="#91b1ad" strokeWidth="4" />
-    <path d={'M' + plan.doorX + ' 74h18'} stroke="#fbfaf6" strokeWidth="4" />
-    <path d={'M' + plan.doorX + ' 74v-15a15 15 0 0 1 15 15'} fill="none" stroke="#a78f74" strokeWidth="1" />
-    <rect x={plan.bathX} y="11" width="26" height="19" fill="#e3e8df" stroke="#9b9a8d" />
-    <path d="M12 31h22" stroke="#9b9a8d" strokeWidth="2" />
-    <rect x={plan.bedX} y={plan.rotate ? 39 : 38} width={plan.rotate ? 27 : 34} height={plan.rotate ? 22 : 27} rx="2" fill="#d6c9b4" stroke="#928675" />
-    <rect x={plan.bedX + 4} y={plan.rotate ? 41 : 40} width={plan.rotate ? 19 : 26} height="7" fill="#fffdf8" stroke="#c4bbab" />
-    <rect x="75" y="52" width="19" height="8" fill="#a58e74" rx="1" />
-  </svg>;
+function PlanOption({ roomId, index }) {
+  const roomPrefix = roomId === 'A' ? 'room-a' : 'room-b';
+  const src = `${import.meta.env.BASE_URL}images/floorplans/${roomPrefix}-${index + 1}.png`;
+  return <img className="plan-drawing" src={src} alt={`${roomId}방 도면 ${String.fromCharCode(65 + index)}`} loading="lazy" decoding="async" draggable="false" />;
 }
 
-function Survey({ roomName, onSubmit, onCancel }) {
+function Survey({ roomId, roomName, onSubmit, onCancel }) {
   const [answers, setAnswers] = useState({});
   const [error, setError] = useState(false);
   const submit = (event) => {
@@ -236,7 +221,7 @@ function Survey({ roomName, onSubmit, onCancel }) {
     {[['이 객실 정보 확인 방식은 내가 필요로 하는 기능을 갖추고 있었다.', 's1'], ['이 객실 정보 확인 방식은 사용하기 쉬웠다.', 's2'], ['이 객실에 대해 얻은 정보를 신뢰할 수 있다.', 's3'], ['이 객실을 예약하고 싶다.', 's4'], ['이 객실을 선택하는 데 확신이 있다.', 's5']].map(([label, key], i) =>
       <fieldset key={key}><legend><i>0{i + 1}</i>{label}</legend><div className="scale">{[1, 2, 3, 4, 5, 6, 7].map((v) => <label className={answers[key] === v ? 'picked' : ''} key={v}><input type="radio" name={key} onChange={() => setAnswers({ ...answers, [key]: v })} /><span>{v}</span></label>)}</div><div className="scale-captions"><span>전혀 그렇지 않다</span><span>매우 그렇다</span></div></fieldset>
     )}
-    {quiz.map(([label, options], i) => <fieldset key={i}><legend><i>0{i + 6}</i>{label}</legend><div className={'choices ' + (i === 4 ? 'plan-choices' : '')}>{options.map((o, optionIndex) => <label className={(answers['q' + i] === o ? 'picked ' : '') + (i === 4 && optionIndex < 4 ? 'plan-choice' : '')} key={o}><input type="radio" name={'q' + i} onChange={() => setAnswers({ ...answers, ['q' + i]: o })} />{i === 4 && optionIndex < 4 ? <><PlanOption index={optionIndex} /><b>{o}</b></> : o}</label>)}</div></fieldset>)}
+    {quiz.map(([label, options], i) => <fieldset key={i}><legend><i>0{i + 6}</i>{label}</legend><div className={'choices ' + (i === 4 ? 'plan-choices' : '')}>{options.map((o, optionIndex) => <label className={(answers['q' + i] === o ? 'picked ' : '') + (i === 4 && optionIndex < 4 ? 'plan-choice' : '')} key={o}><input type="radio" name={'q' + i} onChange={() => setAnswers({ ...answers, ['q' + i]: o })} />{i === 4 && optionIndex < 4 ? <PlanOption roomId={roomId} index={optionIndex} /> : o}</label>)}</div></fieldset>)}
     {error && <p className="error">모든 문항에 응답해 주세요.</p>}<div className="survey-actions"><button type="button" className="secondary" onClick={onCancel}>객실로 돌아가기</button><button className="primary">응답 제출 <span>→</span></button></div>
   </form></div>;
 }
@@ -294,7 +279,7 @@ export default function App() {
         <aside className="card"><div className="card-title"><h3>{room.name}</h3><div className="room-amenities"><span>침대 1</span><span>쇼파 1</span><span>TV</span></div></div><p className="description">객실을 충분히 탐색한 후 객실확인 완료 버튼을 눌러주세요.</p><hr /><button className="reserve" onClick={() => setSurvey(true)}>객실 확인 완료 <b>→</b></button><p className="reserve-note">선택 후 해당 객실 설문이 표시됩니다</p></aside>
       </section>
     </main>
-    {survey && <Survey roomName={room.name} onSubmit={finishRoom} onCancel={() => setSurvey(false)} />}
+    {survey && <Survey roomId={roomId} roomName={room.name} onSubmit={finishRoom} onCancel={() => setSurvey(false)} />}
     {complete && <div className="overlay"><div className="complete"><span>✓</span><small>SESSION COMPLETE</small><h2>두 객실 확인이 완료되었습니다.</h2><p>응답과 확인 시간은 현재 브라우저에 기록됩니다. CSV 파일을 내려받아 보관해 주세요.</p><button className="primary" onClick={exportData}>응답 CSV 다운로드　↓</button><button className="secondary" onClick={endExperiment}>실험 끝내기</button></div></div>}
   </div>;
 }
