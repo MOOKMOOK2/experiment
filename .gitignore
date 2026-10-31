@@ -1,3 +1,7 @@
 .DS_Store
 frontend/node_modules/
 frontend/dist/
+frontend/.env
+frontend/.env.local
+backend/target/
+backend/.env

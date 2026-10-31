@@ -20,8 +20,12 @@ header{height:78px;display:flex;align-items:center;justify-content:space-between
 .model-note{position:absolute;z-index:2;top:14px;right:14px;padding:8px 10px;border-radius:3px;background:#28362fdf;color:#f8f6ef;font-size:8px;letter-spacing:.025em}
 
 .plan-choices{display:grid;grid-template-columns:repeat(4,minmax(70px,1fr));gap:8px}.plan-choices .plan-choice{display:flex;align-items:center;justify-content:center;padding:5px;background:#fffefa}.plan-drawing{width:100%;height:112px;display:block;object-fit:contain}.plan-choices .plan-choice.picked{background:#eff2ee;border-color:#708577}
+.survey-start{width:min(430px,100%);padding:30px;background:#fffefa;border:1px solid #e6e4dd;border-radius:4px;box-shadow:0 12px 30px #17221c18}.survey-start h2{font-family:var(--serif);font-size:20px;font-weight:500;line-height:1.55;letter-spacing:-.04em;margin:0 0 12px;color:#29332e}.survey-start p{font-size:10px;line-height:1.9;color:#828780;margin:0}.survey-start .survey-actions{margin-top:23px}
+.welcome-screen{min-height:100vh;display:grid;place-items:center;padding:28px;background:var(--paper)}.welcome-content{width:min(620px,100%);text-align:center}.welcome-content>small{font-size:10px;letter-spacing:.16em;color:#758579}.welcome-content h1{font-family:var(--serif);font-size:clamp(30px,5vw,48px);font-weight:500;letter-spacing:-.06em;margin:22px 0 12px;color:var(--ink)}.welcome-content p{font-size:13px;line-height:1.8;color:var(--muted);margin:0}.welcome-button{width:min(300px,100%);height:54px;margin-top:36px;font-size:13px}.welcome-button span{margin-left:16px}
 .room-switcher{display:flex;align-items:center;gap:5px}.room-switcher>span{font-size:9px;color:#828780;margin-right:5px}.room-switcher button{min-width:48px;height:31px;border:1px solid #ddded7;border-radius:3px;background:#fffefa;color:#59635b;font-family:inherit;font-size:10px;font-weight:500;cursor:pointer}.room-switcher button.selected{background:#2563a6;border-color:#2563a6;color:white}.preview-status{justify-content:space-between}.preview-card-note{font-size:8px;color:#718579;padding-top:3px}
 @media(max-width:520px){.plan-choices{grid-template-columns:repeat(2,minmax(85px,1fr))}.plan-drawing{height:145px}}
+@media(max-width:520px){.survey-start{padding:23px}.survey-start h2{font-size:18px}}
+@media(max-width:520px){.welcome-screen{padding:22px}.welcome-content h1{font-size:30px}.welcome-content p{font-size:11px}.welcome-button{height:48px;margin-top:29px}}
 @media(max-width:720px){.room-switcher{gap:4px}.room-switcher>span{font-size:8px;margin-right:2px}.room-switcher button{min-width:40px;height:29px;font-size:9px}.preview-status .mode{width:auto}.preview-status .mode span{font-size:8px}}
 
 /* Plain sans-serif typography and blue action controls */
@@ -35,8 +39,35 @@ header{height:78px;display:flex;align-items:center;justify-content:space-between
 .model-loading{position:absolute;inset:auto 12px 12px 12px;z-index:2;padding:9px 11px;border-radius:3px;background:#fffdf3e8;color:#566158;font-size:9px;text-align:center}
 .view-mode-switch{display:flex;gap:6px}.view-mode-switch button,.photo-pagination>button{height:31px;padding:0 11px;border:1px solid #ddded7;border-radius:3px;background:#fffefa;color:#59635b;font-size:9px}.view-mode-switch button.selected{background:#2563a6;border-color:#2563a6;color:white}.photo-viewer{background:#e5e9e4}.photo-arrow{position:absolute;z-index:2;top:50%;transform:translateY(-50%);width:38px;height:46px;border:1px solid #ffffffa8;border-radius:3px;background:#fffdf3e8;color:#29302b;font-size:27px;line-height:1}.photo-arrow.previous{left:14px}.photo-arrow.next{right:14px}.photo-pagination{height:54px;display:flex;align-items:center;justify-content:center;gap:15px}.photo-pagination>div{display:flex;gap:6px}.photo-pagination>div button{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:#c7cbc4}.photo-pagination>div button.selected{background:#2563a6}.photo-pagination>span{font-size:8px;color:#727971}.photo-pagination>button{height:27px;padding:0 8px;font-size:8px}.photo-missing{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;color:#59635b;background:linear-gradient(145deg,#e9ece7,#dce2dc)}.photo-missing b{font-size:15px;font-weight:500}.photo-missing span{font-size:9px;color:#7c837b}
 @media(max-width:720px){.view-mode-switch{gap:4px}.view-mode-switch button{height:29px;padding:0 8px;font-size:8px}.photo-pagination{gap:9px}.photo-arrow{width:33px;height:40px}}
+
+button{text-align:center}.photo-arrow{width:52px;height:40px;font-size:9px;line-height:normal}.welcome-button span,.primary span{display:none}
+.photo-arrow{width:40px;height:46px;font-size:16px;line-height:1}.photo-pagination>button{width:30px;height:30px;padding:0;font-size:11px;line-height:1}
+.preview-status .room-label-box span{padding:6px 14px;border:1px solid #2563a6;border-radius:0;background:#2563a6;color:#fff;font-size:10px;font-weight:500}
+
+/* Larger, easier-to-read survey and a two-by-two floor-plan grid */
+.survey{width:min(820px,100%);padding:30px 34px}
+.survey-head small{font-size:11px}
+.survey-head h2{font-size:28px}
+.survey .muted{font-size:13px}
+.survey fieldset{padding:16px 0 18px}
+.survey legend{font-size:14px;line-height:1.7}
+.survey legend i{font-size:11px}
+.survey .scale{gap:7px;margin-top:12px}
+.survey .scale label span{height:38px;font-size:13px}
+.survey .scale-captions{font-size:10px}
+.survey .choices{gap:8px;margin-top:11px}
+.survey .choices label{padding:9px 12px;font-size:12px}
+.survey .plan-choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.survey .plan-choices .plan-choice{padding:8px}
+.survey .plan-drawing{height:168px}
+.survey .error,.survey .api-error{font-size:12px!important}
+.survey .survey-actions{padding-top:18px}
+.survey .survey-actions button{height:44px;padding:0 18px;font-size:13px}
+@media(max-width:520px){.survey{padding:20px 16px}.survey-head h2{font-size:23px}.survey .plan-drawing{height:150px}.survey .choices label{padding:8px 9px}}
 .header-controls{display:flex;align-items:center;gap:16px}.header-view-mode{gap:5px}.header-view-mode button{height:40px;min-width:91px;padding:0 13px;border-radius:4px;font-size:10px;font-weight:500}.header-controls .room-switcher{padding-left:14px;border-left:1px solid var(--line)}
 .card-title{display:flex;align-items:center;gap:13px;margin:0 0 5px}.card-title h3{margin:0}.room-amenities{display:flex;align-items:center;gap:8px;color:#747c74;font-size:8px;white-space:nowrap}.room-amenities span+span:before{content:'·';margin-right:8px;color:#b0b4ad}
+.exploration-timer{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 10px;margin:14px 0 12px;padding:11px 12px;border:1px solid #e2e7ec;border-radius:3px;background:#f7f9fc}.exploration-timer small{font-size:10px;color:#343a36}.exploration-timer strong{grid-column:2;grid-row:1;color:#2563a6;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:22px;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.api-error{margin:12px 0 0!important;padding:10px 12px;border:1px solid #efd0ca;border-radius:3px;background:#fff5f3;color:#a43d30!important;font-size:11px!important;line-height:1.6}.primary:disabled{cursor:wait;opacity:.62}.result-summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}.result-summary section{display:flex;flex-direction:column;gap:5px;padding:11px;border:1px solid #e6e4dd;border-radius:3px;text-align:left}.result-summary strong{font-size:11px;color:#29302b}.result-summary span{font-size:9px;color:#727971}
 @media(max-width:1000px){.header-controls{gap:8px}.header-view-mode button{min-width:76px;padding:0 9px}.header-controls .room-switcher{padding-left:8px}.room-switcher>span{margin-right:2px}}
 @media(max-width:720px){header{gap:8px}.header-controls{gap:5px}.header-view-mode button{min-width:0;height:29px;padding:0 6px;font-size:8px}.header-controls .room-switcher{padding-left:5px}.header-controls .room-switcher>span{display:none}.header-controls .room-switcher button{min-width:34px;height:29px;font-size:8px}}
 @media(max-width:520px){.card-title{gap:8px}.room-amenities{gap:5px;font-size:7px}.room-amenities span+span:before{margin-right:5px}}

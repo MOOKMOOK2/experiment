@@ -32,9 +32,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
         working-directory: frontend
+      - name: Validate backend URL
+        run: |
+          if [ -z "$VITE_API_BASE_URL" ]; then
+            echo "::error::Set the VITE_API_BASE_URL repository variable before deploying the frontend."
+            exit 1
+          fi
+          case "$VITE_API_BASE_URL" in
+            https://*) ;;
+            *) echo "::error::VITE_API_BASE_URL must be an https URL for production."; exit 1 ;;
+          esac
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
       - name: Build site
         run: npm run build
         working-directory: frontend
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
